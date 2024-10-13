@@ -1,9 +1,26 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import 'hardhat-abi-exporter';
 import 'dotenv/config'
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.24",
+  solidity: {
+    version: "0.8.24",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+      viaIR: true,
+    },
+  },
+  abiExporter: {
+    path: `${process.env.CONTRACTS_ABI_PATH}/abi`,
+    runOnCompile: true,
+    clear: true,
+    flat: true,
+    spacing: 2,
+  },
   defaultNetwork: process.env.DEFAULT_NETWORK,
   networks: {
     bob: {
